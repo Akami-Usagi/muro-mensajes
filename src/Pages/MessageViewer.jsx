@@ -91,6 +91,8 @@ const HpLogo = styled.img`
 const MessageViewer = () => {
   const [messages, setMessages] = useState([]);
   const [current, setCurrent] = useState(0);
+  const [displayKey, setDisplayKey] = useState(0);
+
 
   // Suscripción en tiempo real
   useEffect(() => {
@@ -113,6 +115,7 @@ const MessageViewer = () => {
 
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % messages.length);
+      setDisplayKey((prev) => prev + 1);
     }, 10000);
 
     return () => clearInterval(interval);
@@ -131,6 +134,7 @@ const MessageViewer = () => {
         <>
         <Wrapper>
           <Typewriter
+            key={`msg-${displayKey}`}
             options={{
               strings: [messages[current].message],
               pauseFor: 7000,
@@ -144,6 +148,7 @@ const MessageViewer = () => {
 
           <WrapperTwo>
           <Typewriter
+            key={`name-${displayKey}`}
             options={{
               strings: [messages[current].name],
               pauseFor: 7000,
