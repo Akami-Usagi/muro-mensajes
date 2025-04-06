@@ -96,7 +96,7 @@ const MessageViewer = () => {
 
   // Suscripción en tiempo real
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "aproved"), (snapshot) => {
       const msgs = [];
       snapshot.forEach((doc) => msgs.push(doc.data()));
 

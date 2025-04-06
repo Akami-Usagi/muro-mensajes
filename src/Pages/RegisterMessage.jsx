@@ -14,6 +14,7 @@ const FormDiv = styled.form`
   align-items: center;
   gap: 30px;
   background-color: #1f2b49;
+  color: white;
 `
 const InputField = styled.input`
   width: 350px;
@@ -30,13 +31,14 @@ const InputField = styled.input`
 
 `
 const TextArea = styled.textarea`
-  width: 350px;
-  height: 40px;
+  width: 400px;
+  height: 60px;
   border: none;
   background-color: white;
   border-radius: 20px;
   padding: 15px;
   font-family: "Audiowide", sans-serif;
+  font-size: medium;
   &:focus{
     outline: none;
   }
@@ -57,6 +59,11 @@ const SendButton = styled.button`
   color: #424242;
   font-family: "Audiowide", sans-serif;
   margin-top: 20px;
+`
+const Parraf = styled.p`
+  margin-top: -25px;
+  width: 400px;
+  font-size: xx-small;
 `
 
 
@@ -89,11 +96,11 @@ export default function RegisterMessage() {
       <TextArea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Escribe tu Mensaje (maximo 150 caracteres)"
-        className="border p-2 m-2"
-        maxLength={150}
+        placeholder="Escribe tu Mensaje (maximo 100 caracteres)"
+        maxLength={100}
       />
-      <SendButton type="submit" className="bg-blue-500 text-white p-2 m-2">
+      <Parraf>*Los mensajes enviados seran revisados antes de su publicacion en el Muro Digital</Parraf>
+      <SendButton type="submit">
         Enviar mensaje
       </SendButton>
     </FormDiv>
