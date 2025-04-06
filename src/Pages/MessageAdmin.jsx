@@ -47,16 +47,31 @@ const MessageAdmin = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setMessages(data);
-    });
-
-    return () => unsubscribe();
+    let unsubscribe;
+  
+    const subscribeToMessages = () => {
+      if (unsubscribe) unsubscribe();
+      unsubscribe = onSnapshot(collection(db, "messages"), (snapshot) => {
+        const msgs = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMessages(msgs);
+      });
+    };
+  
+    subscribeToMessages();
+  
+    const interval = setInterval(() => {
+      subscribeToMessages();
+    }, 300000); // cada 5 minutos
+  
+    return () => {
+      if (unsubscribe) unsubscribe();
+      clearInterval(interval);
+    };
   }, []);
+  
 
   const approveMessage = async (msg) => {
     await addDoc(collection(db, "aproved"), {

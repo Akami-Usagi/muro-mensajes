@@ -96,18 +96,31 @@ const MessageViewer = () => {
 
   // Suscripción en tiempo real
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "aproved"), (snapshot) => {
-      const msgs = [];
-      snapshot.forEach((doc) => msgs.push(doc.data()));
-
-      // Baraja los mensajes
-      const shuffled = msgs.sort(() => Math.random() - 0.5);
-      setMessages(shuffled);
-      setCurrent(0);
-    });
-
-    return () => unsubscribe(); // importante limpiar la suscripción
+    let unsubscribe;
+  
+    const subscribeToMessages = () => {
+      if (unsubscribe) unsubscribe(); // limpia anterior
+      unsubscribe = onSnapshot(collection(db, "aproved"), (snapshot) => {
+        const msgs = [];
+        snapshot.forEach((doc) => msgs.push(doc.data()));
+        const shuffled = msgs.sort(() => Math.random() - 0.5);
+        setMessages(shuffled);
+        setCurrent(0);
+      });
+    };
+  
+    subscribeToMessages();
+  
+    const interval = setInterval(() => {
+      subscribeToMessages();
+    }, 300000); // cada 5 minutos
+  
+    return () => {
+      if (unsubscribe) unsubscribe();
+      clearInterval(interval);
+    };
   }, []);
+  
 
   //  Cambia el mensaje actual cada 10 segundos
   useEffect(() => {
