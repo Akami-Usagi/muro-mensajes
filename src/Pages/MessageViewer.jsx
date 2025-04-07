@@ -86,7 +86,12 @@ const HpLogo = styled.img`
   position: absolute;
   left: 50px;
   top: 50px;
-  
+`
+const Qr = styled.img`
+  width: 230px;
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
 `
 const MessageViewer = () => {
   const [messages, setMessages] = useState([]);
@@ -142,6 +147,7 @@ const MessageViewer = () => {
     </BackgoundVideo>
     <TicLogo src="images/logo_tic.png"/>
     <HpLogo src="images/logo_help.png"/>
+    <Qr src="images/qr.webp"/>
         
       {messages.length > 0 && (
         <>
